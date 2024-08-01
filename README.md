@@ -1,4 +1,113 @@
-An Auth Flow with .NET 8 - isolated worker
+
+# CRM Application
+
+A comprehensive Customer Relationship Management (CRM) application designed for businesses to manage their stores, employees, and services across multiple locations. The app also enables clients to discover nearby services and book appointments.
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Architecture](#architecture)
+5. [Installation](#installation)
+6. [Usage](#usage)
+7. [API Documentation](#api-documentation)
+8. [Database Schema](#database-schema)
+9. [Deployment](#deployment)
+10. [Contributing](#contributing)
+11. [License](#license)
+12. [Contact](#contact)
+
+## Introduction
+
+The CRM Application provides a platform for businesses to efficiently manage their operations across multiple locations. It facilitates the addition of stores, employee management, and service offerings. Clients can easily find and book services, ensuring a seamless experience.
+
+## Features
+
+### For Businesses
+- **Business Registration:** Register your business on the platform.
+- **Store Management:** Add and manage stores in various locations.
+- **Employee Management:** Assign and manage employees for each store.
+- **Service Management:** Define and categorize services offered at each store.
+
+### For Clients
+- **Client Registration:** Clients can register and create profiles.
+- **Service Discovery:** Find services based on location and other filters.
+- **Appointment Booking:** Book appointments with businesses for various services.
+
+## Tech Stack
+
+- **Frontend:** Next.js
+- **Backend:** .NET 8, Azure Functions
+- **Database:** SQL Server, Cosmos DB (for availability data)
+- **Authentication:** Azure AD B2C
+- **Hosting:** Microsoft Azure
+
+## Architecture
+
+The CRM Application follows a microservices architecture with a serverless backend. The frontend is built with Next.js for a responsive and interactive user experience. The backend uses Azure Functions for scalable serverless computing and integrates with SQL Server and Cosmos DB for data storage.
+
+![Architecture Diagram](architecture-diagram.png)  <!-- Replace with the actual image -->
+
+## Installation
+
+### Prerequisites
+- Node.js
+- .NET 8 SDK
+- Azure account
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/crm-app.git
+   ```
+2. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+3. Configure backend services and deploy them to Azure.
+
+## Usage
+
+1. **Start the frontend:**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+2. **Backend services:** Deploy to Azure and ensure they are running.
+
+## API Documentation
+
+The application exposes various APIs for managing business operations and client interactions. Refer to the API documentation for detailed information on available endpoints, request/response formats, and usage examples.
+
+## Database Schema
+
+The database schema includes tables for businesses, stores, employees, services, and appointments. Below is a visual representation of the schema:
+
+![Database Schema](img.png)
+
+## Deployment
+
+The application is deployed on Microsoft Azure, utilizing Azure Functions for serverless backend services and Azure Cosmos DB for scalable database management. CI/CD pipelines are set up using Azure DevOps for seamless deployment.
+
+## Contributing
+
+We welcome contributions from the community. Please read our Contributing Guidelines to learn how to get involved.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## Contact
+
+For inquiries or support, please contact us at [support@example.com](mailto:support@example.com).
+
+---
+
+Thank you for using our CRM Application! We hope it helps streamline your business operations and enhances client interactions.
+
 
 # CRM API Business Identity Azure Function
 
