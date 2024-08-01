@@ -194,4 +194,4 @@ This project is licensed under the MIT License.
 
 The database schema for the CRM API Client Service is depicted below:
 
-![Database Schema](img.png)
+![Database Schema](db_diagram.png)
