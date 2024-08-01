@@ -88,7 +88,7 @@ The application exposes various APIs for managing business operations and client
 
 The database schema includes tables for businesses, stores, employees, services, and appointments. Below is a visual representation of the schema:
 
-![Database Schema](db_scheme.png)
+![Database Schema](db_diagram.png)
 
 ## Deployment
 
