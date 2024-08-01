@@ -18,7 +18,7 @@ public partial class StoreLocation
 
     public int AddressId { get; set; }
     
-    public Point Location { get; set; } = null!;
+    public Geometry Location { get; set; } = null!;
 
     public virtual Address Address { get; set; } = null!;
 

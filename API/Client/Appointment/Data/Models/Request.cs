@@ -1,7 +1,7 @@
 using FluentValidation;
 using Newtonsoft.Json;
 
-namespace Appointment.Data.Models
+namespace CRM.API.Client.Appointment.Data.Models
 {
     public class Request
     {

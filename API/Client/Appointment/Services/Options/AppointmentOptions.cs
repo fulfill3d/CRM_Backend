@@ -1,4 +1,4 @@
-namespace Appointment.Services.Options
+namespace CRM.API.Client.Appointment.Services.Options
 {
     public class AppointmentOptions
     {

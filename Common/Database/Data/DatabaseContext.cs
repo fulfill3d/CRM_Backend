@@ -245,7 +245,7 @@ public partial class DatabaseContext : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.IsEnabled).HasDefaultValue(true);
             entity.Property(e => e.Location)
-                .HasColumnType("geometry(Point, 4326)")
+                .HasColumnType("geometry")
                 .HasDefaultValueSql("([GEOGRAPHY]::Point((0),(0),(4326)))");
             entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.UpdatedAt)

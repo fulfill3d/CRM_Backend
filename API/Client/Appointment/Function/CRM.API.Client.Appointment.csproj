@@ -34,7 +34,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\..\Common\DI\CRM.Common.DI.csproj" />
-        <ProjectReference Include="..\Data\Appointment.Data.csproj"/>
-        <ProjectReference Include="..\Services\Appointment.Services.csproj"/>
+        <ProjectReference Include="..\Data\CRM.API.Client.Appointment.Data.csproj" />
+        <ProjectReference Include="..\Services\CRM.API.Client.Appointment.Services.csproj" />
     </ItemGroup>
 </Project>

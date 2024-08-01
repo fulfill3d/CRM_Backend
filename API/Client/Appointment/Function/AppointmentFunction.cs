@@ -5,8 +5,8 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using Appointment.Data.Models;
-using Appointment.Services.Interfaces;
+using CRM.API.Client.Appointment.Data.Models;
+using CRM.API.Client.Appointment.Services.Interfaces;
 using CRM.Common.Services.Interfaces;
 
 namespace Appointment
@@ -68,46 +68,6 @@ namespace Appointment
             response.StatusCode = HttpStatusCode.OK;
             await response.WriteStringAsync(JsonConvert.SerializeObject(request));
             return response;
-        }
-
-        [Function(nameof(ServiceBus))]
-        [OpenApiOperation(
-            operationId: "ServiceBus",
-            tags: new[] { "servicebus" })]
-        public async Task ServiceBus(
-            [ServiceBusTrigger("appointment-queue", Connection = "ServiceBusConnectionString",
-                IsSessionsEnabled = true)]
-            string message,
-            FunctionContext context)
-        {
-            logger.LogInformation($"Message received: {message}");
-            await appointmentService.AppointmentServiceMethod();
-        }
-
-        [Function(nameof(TimerFunction))]
-        [OpenApiOperation(
-            operationId: "TimerFunction",
-            tags: new[] { "timer" })]
-        [FixedDelayRetry(5, "00:00:10")]
-        public async Task TimerFunction([TimerTrigger("0 */5 * * * *")] TimerInfo timerInfo,
-            FunctionContext context)
-        {
-            logger.LogInformation("TimerTrigger function triggered");
-            await appointmentService.AppointmentServiceMethod();
-        }
-
-        [Function(nameof(BlobFunction))]
-        [OpenApiOperation(
-            operationId: "BlobFunction",
-            tags: new[] { "blob" })]
-        public async Task BlobFunction(
-            [BlobTrigger("appointment-container/{name}")]
-            Stream myTriggerItem,
-            string name,
-            FunctionContext context)
-        {
-            logger.LogInformation("Timer function triggered");
-            await appointmentService.AppointmentServiceMethod();
         }
     }
 }

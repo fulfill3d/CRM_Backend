@@ -5,26 +5,31 @@ namespace CRM.API.Business.Management.Data.Models.Request
 {
     public class AddressRequest
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-        [JsonProperty("location-name")]
-        public string LocationName { get; set; }
-        [JsonProperty("first-name")]
-        public string FirstName { get; set; }
-        [JsonProperty("last-name")]
-        public string LastName { get; set; }
-        [JsonProperty("street1")]
-        public string Street1 { get; set; }
-        [JsonProperty("street2")]
-        public string? Street2 { get; set; }
-        [JsonProperty("city")]
-        public string City { get; set; }
-        [JsonProperty("state")]
-        public string State { get; set; }
-        [JsonProperty("country")]
-        public string Country { get; set; }
-        [JsonProperty("zip-code")]
-        public string ZipCode { get; set; }
+        [JsonProperty("id")] public int Id { get; set; }
+        [JsonProperty("location-name")] public string LocationName { get; set; }
+        [JsonProperty("first-name")] public string FirstName { get; set; }
+        [JsonProperty("last-name")] public string LastName { get; set; }
+        [JsonProperty("street1")] public string Street1 { get; set; }
+        [JsonProperty("street2")] public string? Street2 { get; set; }
+        [JsonProperty("city")] public string City { get; set; }
+        [JsonProperty("state")] public string State { get; set; }
+        [JsonProperty("country")] public string Country { get; set; }
+        [JsonProperty("zip-code")] public string ZipCode { get; set; }
+        
+        public override string ToString()
+        {
+            // Zip Code is only implemented for privacy and security reasons
+            // var address = $"{Street1}";
+            //
+            // if (!string.IsNullOrEmpty(Street2))
+            // {
+            //     address += $", {Street2}";
+            // }
+            //
+            // address += $", {City}, {State}, {Country}, {ZipCode}";
+
+            return ZipCode;
+        }
     }
 
     public class AddressRequestValidator : AbstractValidator<AddressRequest>

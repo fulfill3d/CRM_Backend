@@ -42,11 +42,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{51
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Appointment", "Appointment", "{C9886B68-A911-415D-9429-6B2AAAC8F91C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointment", "API\Client\Appointment\Function\Appointment.csproj", "{E7978ABC-57FC-445C-BBBF-3FB2AF5E4E61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.API.Client.Appointment", "API\Client\Appointment\Function\CRM.API.Client.Appointment.csproj", "{E7978ABC-57FC-445C-BBBF-3FB2AF5E4E61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointment.Data", "API\Client\Appointment\Data\Appointment.Data.csproj", "{305077B2-2A76-4BAB-AA31-6E544895CF94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.API.Client.Appointment.Data", "API\Client\Appointment\Data\CRM.API.Client.Appointment.Data.csproj", "{305077B2-2A76-4BAB-AA31-6E544895CF94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointment.Services", "API\Client\Appointment\Services\Appointment.Services.csproj", "{F349EDC8-AB03-487A-B3A9-9351CCB8A28B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.API.Client.Appointment.Services", "API\Client\Appointment\Services\CRM.API.Client.Appointment.Services.csproj", "{F349EDC8-AB03-487A-B3A9-9351CCB8A28B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{682CBD27-E6EA-434B-86F3-424A21F54A18}"
 EndProject
@@ -57,6 +57,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.API.Client.Service.Services", "API\Client\Service\Services\CRM.API.Client.Service.Services.csproj", "{54A56948-E92F-4623-901D-9C862E0E3C43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.Common.DatabaseMigration", "Common\DatabaseMigration\CRM.Common.DatabaseMigration.csproj", "{24C1BAB8-4CCB-46D9-A08B-5120FB5A19FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.Integrations.CosmosClient", "Integrations\CosmosClient\CRM.Integrations.CosmosClient.csproj", "{C45860DB-977D-4D61-849B-E0E335A9B4ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.Common.Core", "Common\Core\CRM.Common.Core.csproj", "{996F1A0F-6A09-47F8-9AA6-DD84B55CC025}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.Integrations.GoogleMapsClient", "Integrations\GoogleMapsClient\CRM.Integrations.GoogleMapsClient.csproj", "{87052548-739A-47F4-92FA-D181B10D68A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +96,9 @@ Global
 		{F727E651-69B2-4126-B1A2-A57A1EF08A34} = {682CBD27-E6EA-434B-86F3-424A21F54A18}
 		{54A56948-E92F-4623-901D-9C862E0E3C43} = {682CBD27-E6EA-434B-86F3-424A21F54A18}
 		{24C1BAB8-4CCB-46D9-A08B-5120FB5A19FB} = {81B69036-2100-4EB6-A7BB-744B0466ADC9}
+		{C45860DB-977D-4D61-849B-E0E335A9B4ED} = {CF5E20B1-9252-492F-9446-35ADBABC2FBA}
+		{996F1A0F-6A09-47F8-9AA6-DD84B55CC025} = {81B69036-2100-4EB6-A7BB-744B0466ADC9}
+		{87052548-739A-47F4-92FA-D181B10D68A6} = {CF5E20B1-9252-492F-9446-35ADBABC2FBA}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E1DCF3E3-D5AE-484B-8F2A-966EE9CD0715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -168,5 +177,17 @@ Global
 		{24C1BAB8-4CCB-46D9-A08B-5120FB5A19FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24C1BAB8-4CCB-46D9-A08B-5120FB5A19FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24C1BAB8-4CCB-46D9-A08B-5120FB5A19FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C45860DB-977D-4D61-849B-E0E335A9B4ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C45860DB-977D-4D61-849B-E0E335A9B4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C45860DB-977D-4D61-849B-E0E335A9B4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C45860DB-977D-4D61-849B-E0E335A9B4ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{996F1A0F-6A09-47F8-9AA6-DD84B55CC025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{996F1A0F-6A09-47F8-9AA6-DD84B55CC025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{996F1A0F-6A09-47F8-9AA6-DD84B55CC025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{996F1A0F-6A09-47F8-9AA6-DD84B55CC025}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87052548-739A-47F4-92FA-D181B10D68A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87052548-739A-47F4-92FA-D181B10D68A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87052548-739A-47F4-92FA-D181B10D68A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87052548-739A-47F4-92FA-D181B10D68A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

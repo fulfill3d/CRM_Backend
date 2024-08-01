@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using Appointment.Data.Database;
-using Appointment.Data.Models;
-using Appointment.Services;
-using Appointment.Services.Interfaces;
-using Appointment.Services.Options;
+using CRM.API.Client.Appointment.Data.Database;
+using CRM.API.Client.Appointment.Data.Models;
+using CRM.API.Client.Appointment.Services;
+using CRM.API.Client.Appointment.Services.Interfaces;
+using CRM.API.Client.Appointment.Services.Options;
 using CRM.Common.Database;
 using CRM.Common.DI;
 

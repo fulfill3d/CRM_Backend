@@ -1,15 +1,16 @@
 using CRM.Common.Database.Data;
 using CRM.API.Business.Management.Data.Database;
-using CRM.API.Business.Management.Data.Models;
 using CRM.API.Business.Management.Data.Models.Request;
 using CRM.API.Business.Management.Data.Models.Response;
 using CRM.API.Business.Management.Services.Interfaces;
+using CRM.Integrations.GoogleMapsClient.Interfaces;
+using CRM.Integrations.GoogleMapsClient.Models;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
 
 namespace CRM.API.Business.Management.Services
 {
-    public class ManagementService(ManagementContext dbContext)
+    public class ManagementService(ManagementContext dbContext, IGoogleMapsClient googleMapsClient)
         : IManagementService
     {
         // STORE
@@ -99,8 +100,8 @@ namespace CRM.API.Business.Management.Services
                 UpdatedAt = DateTime.UtcNow,
                 IsEnabled = true
             };
-
-            var geoLocation = GetTopologyPointByAddress(request.Address);
+            
+            var geoLocation = await GetTopologyPointByAddress(request.Address);
             
             var storeLocation = new StoreLocation
             {
@@ -169,7 +170,7 @@ namespace CRM.API.Business.Management.Services
             location.Address.ZipCode = request.Address.ZipCode;
             location.Address.UpdatedAt = DateTime.UtcNow;
             
-            var geoLocation = GetTopologyPointByAddress(request.Address);
+            var geoLocation = await GetTopologyPointByAddress(request.Address);
             location.Location = geoLocation;
 
             await dbContext.SaveChangesAsync();
@@ -581,11 +582,20 @@ namespace CRM.API.Business.Management.Services
         }
         
         // PRIVATE METHODS
-        private Point GetTopologyPointByAddress(AddressRequest address)
+        private async Task<Point> GetTopologyPointByAddress(AddressRequest address)
         {
             var geometryFactory = new GeometryFactory();
-            // TODO Google API for address to location
-            return geometryFactory.CreatePoint(new Coordinate(0, 0));
+            
+            var response = await googleMapsClient.GetCoordinatesAsync(new GeocodingRequest
+            {
+                Address = address.ToString()
+            });
+            
+            var point = geometryFactory.CreatePoint(new Coordinate(response?.Longitude ?? 0, response?.Latitude ?? 0));
+            point.SRID = 4326;
+
+            return point;
         }
+        
     }
 }

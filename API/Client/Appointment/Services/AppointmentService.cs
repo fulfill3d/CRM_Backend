@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Appointment.Services.Interfaces;
-using Appointment.Services.Options;
+using CRM.API.Client.Appointment.Services.Interfaces;
+using CRM.API.Client.Appointment.Services.Options;
 
-namespace Appointment.Services
+namespace CRM.API.Client.Appointment.Services
 {
     public class AppointmentService(ILogger<AppointmentService> logger, IOptions<AppointmentOptions> opt)
         : IAppointmentService

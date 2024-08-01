@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Appointment.Data.Database
+namespace CRM.API.Client.Appointment.Data.Database
 {
     public partial class AppointmentContext(DbContextOptions<AppointmentContext> options) : DbContext(options)
     {

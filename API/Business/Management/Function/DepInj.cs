@@ -6,6 +6,8 @@ using CRM.API.Business.Management.Data.Models.Request;
 using CRM.API.Business.Management.Services;
 using Microsoft.Extensions.DependencyInjection;
 using CRM.API.Business.Management.Services.Interfaces;
+using CRM.Integrations.GoogleMapsClient;
+using CRM.Integrations.GoogleMapsClient.Options;
 
 namespace CRM.API.Business.Management
 {
@@ -15,7 +17,8 @@ namespace CRM.API.Business.Management
             this IServiceCollection services,
             DatabaseOption dbOption,
             Action<TokenValidationOptions> tokenValidation,
-            Action<AuthorizationScope> authorizationScope)
+            Action<AuthorizationScope> authorizationScope,
+            Action<GoogleMapsOptions> configureGoogleMaps)
         {
             #region Miscellaneous
             
@@ -29,6 +32,7 @@ namespace CRM.API.Business.Management
             #region Services
             
             services.AddTransient<IManagementService, ManagementService>();
+            services.RegisterGoogleMapsClient(configureGoogleMaps);
             
             #endregion
             

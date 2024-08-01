@@ -36,6 +36,10 @@ var host = new HostBuilder()
         {
             tokenOptions.Read = configuration["CRM_AuthScope_Business_Management_Read"] ?? string.Empty;
             tokenOptions.Write = configuration["CRM_AuthScope_Business_Management_Write"] ?? string.Empty;
+        },
+        (tokenOptions) =>
+        {
+            tokenOptions.ApiKey = configuration["ApiKey_GoogleMaps"] ?? string.Empty;
         });
     })
     .Build();
