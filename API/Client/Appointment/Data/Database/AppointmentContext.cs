@@ -4,36 +4,34 @@ namespace CRM.API.Client.Appointment.Data.Database
 {
     public partial class AppointmentContext(DbContextOptions<AppointmentContext> options) : DbContext(options)
     {
+        public virtual DbSet<CRM.Common.Database.Data.Appointment> Appointments { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Store> Stores { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Client> Clients { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.StoreLocation> StoreLocations { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Address> Addresses { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.StoreEmployee> StoreEmployees { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.StoreService> StoreServices { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            
+            modelBuilder.Entity<CRM.Common.Database.Data.Store>()
+                .ToTable("Stores");
 
-            // //If the microservice has own context but separate db, add its config to the context
-            // modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
-
-            // //If the microservice has own context and db, add its config to the context
-
-            // base.OnModelCreating(modelBuilder);
-            //
-            // modelBuilder.Entity<Entity>(entity =>
-            // {
-            //     entity.HasKey(e => e.Id);
-            //
-            //     entity.Property(e => e.Id)
-            //         .ValueGeneratedOnAdd();
-            // });
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CRM.Common.Database.Data.DatabaseContext).Assembly);
 
             OnModelCreatingPartial(modelBuilder);
         }
+
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
         public void RevertAllChangesInTheContext()
         {
-            foreach (var entry in ChangeTracker.Entries())
-            {
-                entry.State = EntityState.Detached;
-            }
+            ChangeTracker.Entries()
+                .Where(e => e.Entity != null).ToList()
+                .ForEach(e => e.State = EntityState.Detached);
         }
     }
 }

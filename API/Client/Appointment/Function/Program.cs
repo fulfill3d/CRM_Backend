@@ -24,11 +24,7 @@ var host = new HostBuilder()
 
         services.RegisterServices(new DatabaseOption
         {
-            ConnectionString = configuration["ConnectionString"] ?? string.Empty,
-        }, appointmentOptions =>
-        {
-            appointmentOptions.Option1 = configuration["Option1"] ?? string.Empty;
-            appointmentOptions.Option2 = configuration["Option2"] ?? string.Empty;
+            ConnectionString = configuration["CRM_ConnectionString_Db"] ?? string.Empty,
         });
     })
     .Build();

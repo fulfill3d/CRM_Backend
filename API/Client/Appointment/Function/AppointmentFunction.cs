@@ -2,71 +2,118 @@ using System.Net;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
-using CRM.API.Client.Appointment.Data.Models;
+using CRM.API.Client.Appointment.Data.Models.Request;
+using CRM.API.Client.Appointment.Data.Models.Response;
 using CRM.API.Client.Appointment.Services.Interfaces;
 using CRM.Common.Services.Interfaces;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace Appointment
 {
     public class AppointmentFunction(
-        ILogger<AppointmentFunction> logger,
-        IHttpRequestBodyMapper<Request> requestBodyMapper,
+        IHttpRequestBodyMapper<NewAppointmentRequest> newAppointmentRequestBodyMapper,
+        IHttpRequestBodyMapper<UpdateAppointmentRequest> updateAppointmentRequestBodyMapper,
         IAppointmentService appointmentService)
     {
-        [Function(nameof(HttpGet))]
+        [Function(nameof(GetAppointments))]
         [OpenApiOperation(
-            operationId: "HttpGet",
-            tags: new[] { "get" })]
-        [OpenApiParameter(
-            name: "integerId",
-            In = ParameterLocation.Path,
-            Required = true,
-            Type = typeof(int),
-            Description = "The integer ID parameter")]
+            operationId: "GetAppointments",
+            tags: new[] { "get" }, 
+            Description = "Returns client appointments")]
         [OpenApiResponseWithBody(
             statusCode: HttpStatusCode.OK,
             contentType: "application/json",
-            bodyType: typeof(string),
+            bodyType: typeof(List<AppointmentViewModel>),
             Description = "The OK response")]
-        public async Task<HttpResponseData> HttpGet(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "route/{integerId}")]
-            HttpRequestData req,
-            FunctionContext executionContext, int integerId)
-        {
-            var response = req.CreateResponse();
-            logger.LogInformation("Parameter is {value}", integerId);
-            response.StatusCode = HttpStatusCode.OK;
-            await appointmentService.AppointmentServiceMethod();
-            await response.WriteStringAsync($"Received ID: {integerId}");
-            return response;
-        }
-
-        [Function(nameof(HttpPost))]
-        [OpenApiOperation(
-            operationId: "HttpPost",
-            tags: new[] { "post" })]
-        [OpenApiRequestBody(
-            contentType: "application/json",
-            bodyType: typeof(Request),
-            Description = "The request payload")]
-        [OpenApiResponseWithBody(
-            statusCode: HttpStatusCode.OK,
-            contentType: "application/json",
-            bodyType: typeof(Request),
-            Description = "The OK response")]
-        public async Task<HttpResponseData> HttpPost(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]
+        public async Task<HttpResponseData> GetAppointments(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "appointment/get-all")]
             HttpRequestData req,
             FunctionContext executionContext)
         {
-            var request = await requestBodyMapper.MapAndValidate(req.Body);
-            await appointmentService.AppointmentServiceMethod();
             var response = req.CreateResponse();
+            var appointments = await appointmentService.GetAppointments(5);
             response.StatusCode = HttpStatusCode.OK;
-            await response.WriteStringAsync(JsonConvert.SerializeObject(request));
+            await response.WriteStringAsync(JsonConvert.SerializeObject(appointments, Formatting.Indented));
+            return response;
+        }
+
+        [Function(nameof(SetAppointment))]
+        [OpenApiOperation(
+            operationId: "SetAppointment",
+            tags: new[] { "post" }, 
+            Description = "Set the appointment")]
+        [OpenApiRequestBody(
+            contentType: "application/json",
+            bodyType: typeof(NewAppointmentRequest),
+            Description = "The request payload")]
+        public async Task<HttpResponseData> SetAppointment(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "appointment/set")]
+            HttpRequestData req,
+            FunctionContext executionContext)
+        {
+            var response = req.CreateResponse();
+            var request = await newAppointmentRequestBodyMapper.MapAndValidate(req.Body);
+            var success = await appointmentService.SetNewAppointment(request, 5);
+            if (!success)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                return response;
+            }
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
+
+        [Function(nameof(UpdateAppointment))]
+        [OpenApiOperation(
+            operationId: "UpdateAppointment",
+            tags: new[] { "patch" }, 
+            Description = "Update the appointment")]
+        [OpenApiRequestBody(
+            contentType: "application/json",
+            bodyType: typeof(UpdateAppointmentRequest),
+            Description = "The request payload")]
+        public async Task<HttpResponseData> UpdateAppointment(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "appointment/update")]
+            HttpRequestData req,
+            FunctionContext executionContext)
+        {
+            var response = req.CreateResponse();
+            var request = await updateAppointmentRequestBodyMapper.MapAndValidate(req.Body);
+            var success = await appointmentService.UpdateAppointment(request, 5);
+            if (!success)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                return response;
+            }
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
+
+        [Function(nameof(CancelAppointment))]
+        [OpenApiOperation(
+            operationId: "CancelAppointment",
+            tags: new[] { "delete" }, 
+            Description = "Cancel the appointment")]
+        [OpenApiParameter(name: "appointmentId",
+            In = ParameterLocation.Path,
+            Required = true,
+            Type = typeof(int),
+            Description = "Appointment ID")]
+        public async Task<HttpResponseData> CancelAppointment(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "appointment/cancel/{appointmentId}")]
+            HttpRequestData req,
+            FunctionContext executionContext,
+            int appointmentId)
+        {
+            var response = req.CreateResponse();
+            var success = await appointmentService.CancelAppointment(appointmentId, 5);
+            if (!success)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                return response;
+            }
+            response.StatusCode = HttpStatusCode.OK;
             return response;
         }
     }

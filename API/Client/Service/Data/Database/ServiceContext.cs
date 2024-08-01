@@ -5,7 +5,7 @@ namespace CRM.API.Client.Service.Data.Database
     public partial class ServiceContext(DbContextOptions<ServiceContext> options) : DbContext(options)
     {
         public virtual DbSet<CRM.Common.Database.Data.Address> Addresses { get; set; }
-        public virtual DbSet<CRM.Common.Database.Data.Store> Store { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Store> Stores { get; set; }
         public virtual DbSet<CRM.Common.Database.Data.StoreLocation> StoreLocations { get; set; }
         public virtual DbSet<CRM.Common.Database.Data.StoreEmployee> StoreEmployees { get; set; }
         public virtual DbSet<CRM.Common.Database.Data.StoreService> StoreServices { get; set; }

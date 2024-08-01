@@ -6,7 +6,6 @@ using CRM.API.Client.Service.Data.Mappers;
 using CRM.API.Client.Service.Data.Models.Request;
 using CRM.API.Client.Service.Services;
 using CRM.API.Client.Service.Services.Interfaces;
-using CRM.API.Client.Service.Services.Options;
 using CRM.Common.Services.Interfaces;
 using CRM.Integrations.GoogleMapsClient;
 using CRM.Integrations.GoogleMapsClient.Options;

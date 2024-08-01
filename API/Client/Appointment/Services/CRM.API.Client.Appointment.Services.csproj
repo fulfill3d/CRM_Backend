@@ -13,4 +13,9 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\Common\Core\CRM.Common.Core.csproj" />
+      <ProjectReference Include="..\Data\CRM.API.Client.Appointment.Data.csproj" />
+    </ItemGroup>
+
 </Project>
