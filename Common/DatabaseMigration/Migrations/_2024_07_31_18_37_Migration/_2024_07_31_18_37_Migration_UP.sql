@@ -1,0 +1,3 @@
+ALTER TABLE StoreLocations ADD Location GEOGRAPHY NOT NULL DEFAULT GEOGRAPHY::Point(0, 0, 4326);
+ALTER TABLE StoreLocations DROP COLUMN Latitude;
+ALTER TABLE StoreLocations DROP COLUMN Longitude;
