@@ -38,14 +38,16 @@ The CRM Application provides a platform for businesses to efficiently manage the
 ## Tech Stack
 
 - **Frontend:** Next.js
-- **Backend:** .NET 8, Azure Functions
+- **Backend:** .NET 8 (Isolated Worker), Azure Functions v4
 - **Database:** SQL Server, Cosmos DB (for availability data)
 - **Authentication:** Azure AD B2C
+- **Configuration & Secrets Management:** Azure App Configuration, Azure Key Vault
+- **API Documentation:** OpenAPI
 - **Hosting:** Microsoft Azure
 
 ## Architecture
 
-The CRM Application follows a microservices architecture with a serverless backend. The frontend is built with Next.js for a responsive and interactive user experience. The backend uses Azure Functions for scalable serverless computing and integrates with SQL Server and Cosmos DB for data storage.
+The CRM Application follows a microservices architecture with a serverless backend. The frontend is built with Next.js for a responsive and interactive user experience. The backend utilizes Azure Functions (v4) and .NET 8 isolated worker for scalable serverless computing, with SQL Server and Cosmos DB for data storage.
 
 ![Architecture Diagram](architecture-diagram.png)  <!-- Replace with the actual image -->
 
@@ -67,7 +69,7 @@ The CRM Application follows a microservices architecture with a serverless backe
    cd frontend
    npm install
    ```
-3. Configure backend services and deploy them to Azure.
+3. Configure backend services, including Azure App Configuration and Key Vault, and deploy them to Azure.
 
 ## Usage
 
@@ -80,13 +82,13 @@ The CRM Application follows a microservices architecture with a serverless backe
 
 ## API Documentation
 
-The application exposes various APIs for managing business operations and client interactions. Refer to the API documentation for detailed information on available endpoints, request/response formats, and usage examples.
+The application exposes various APIs for managing business operations and client interactions. The API documentation, generated using OpenAPI, provides detailed information on available endpoints, request/response formats, and usage examples.
 
 ## Database Schema
 
 The database schema includes tables for businesses, stores, employees, services, and appointments. Below is a visual representation of the schema:
 
-![Database Schema](img.png)
+![Database Schema](db_scheme.png)
 
 ## Deployment
 
