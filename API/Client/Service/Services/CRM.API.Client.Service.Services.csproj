@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\Common\Services\CRM.Common.Services.csproj" />
+      <ProjectReference Include="..\..\..\..\Integrations\GoogleMapsClient\CRM.Integrations.GoogleMapsClient.csproj" />
       <ProjectReference Include="..\Data\CRM.API.Client.Service.Data.csproj" />
     </ItemGroup>
 

@@ -25,6 +25,9 @@ var host = new HostBuilder()
         services.RegisterServices(new DatabaseOption
         {
             ConnectionString = configuration["CRM_ConnectionString_Db"] ?? string.Empty,
+        }, configureGoogle =>
+        {
+            configureGoogle.ApiKey = configuration["ApiKey_GoogleMaps"] ?? string.Empty;
         });
     })
     .Build();

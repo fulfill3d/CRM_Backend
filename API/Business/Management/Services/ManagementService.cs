@@ -382,7 +382,8 @@ namespace CRM.API.Business.Management.Services
             var store = await dbContext.Stores
                 .FirstOrDefaultAsync(s =>
                     s.IsEnabled == true &&
-                    s.BusinessRefId == Guid.Parse(businessRefId));
+                    s.BusinessRefId == Guid.Parse(businessRefId) && 
+                    s.Id == storeId);
 
             if (store == null) return false;
 
@@ -424,7 +425,6 @@ namespace CRM.API.Business.Management.Services
                 Duration = request.Duration,
                 Price = request.Price,
                 BusinessRefId = Guid.Parse(businessRefId),
-                StoreId = storeId,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsEnabled = true,

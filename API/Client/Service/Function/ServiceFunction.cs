@@ -64,7 +64,7 @@ namespace CRM.API.Client.Service
             }
             response.StatusCode = HttpStatusCode.OK;
             response.Headers.Add("Content-Type", "application/json");
-            await response.WriteStringAsync(JsonConvert.SerializeObject(service));
+            await response.WriteStringAsync(JsonConvert.SerializeObject(service, Formatting.Indented));
             return response;
         }
     }

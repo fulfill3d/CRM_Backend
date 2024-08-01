@@ -6,6 +6,8 @@ using CRM.API.Client.Service.Data.Models.Response;
 using CRM.API.Client.Service.Services.Interfaces;
 using CRM.Common.Database.Data;
 using CRM.Common.Services.Interfaces;
+using CRM.Integrations.GoogleMapsClient.Interfaces;
+using CRM.Integrations.GoogleMapsClient.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using NetTopologySuite.Geometries;
@@ -15,13 +17,23 @@ namespace CRM.API.Client.Service.Services
     public class ServiceService(
         IMapper<IDictionary<string, StringValues>, ServiceFilterParameters> serviceFilterParametersMapper,
         IMapper<IDictionary<string, StringValues>, PaginationParameters> paginationFilterParametersMapper,
-        ServiceContext dbContext) : IServiceService
+        ServiceContext dbContext,
+        IGoogleMapsClient googleMapsClient
+        ) : IServiceService
     {
         private const double MetersPerMile = 1609.34;
         public async Task<List<ServiceViewModel>> GetServices(Dictionary<string, StringValues> parameters)
         {
             var serviceFilters = serviceFilterParametersMapper.Map(parameters);
             var paginationFilters = paginationFilterParametersMapper.Map(parameters);
+            
+            var response = await googleMapsClient.GetCoordinatesAsync(new GeocodingRequest
+            {
+                Address = serviceFilters.ZipCode.ToString() ?? string.Empty
+            });
+
+            serviceFilters.Lat = response?.Latitude ?? 0;
+            serviceFilters.Lon = response?.Longitude ?? 0;
 
             #region Check Cache
             // TODO: RedisCache
@@ -116,7 +128,10 @@ namespace CRM.API.Client.Service.Services
             // Filter by location
             if (serviceFilters.Lat.HasValue && serviceFilters.Lon.HasValue)
             {
-                var userLocation = new Point((double)serviceFilters.Lat.Value, (double)serviceFilters.Lon.Value) { SRID = 4326 };
+                var geometryFactory = new GeometryFactory();
+            
+                var userLocation = geometryFactory.CreatePoint(new Coordinate(serviceFilters.Lon.Value, serviceFilters.Lat.Value));
+                userLocation.SRID = 4326;
                 
                 var radiusInMiles = serviceFilters.Radius.GetValueOrDefault(5); // Radius in miles
                 var radiusInMeters = radiusInMiles * MetersPerMile;

@@ -23,16 +23,22 @@ namespace CRM.API.Client.Service.Data.Mappers
             }
 
             // Map Lat parameter
-            if (queryParameters.TryGetValue("lat", out var latString) && decimal.TryParse(latString.FirstOrDefault(), out decimal lat))
+            if (queryParameters.TryGetValue("zipCode", out var zipCodeString) && int.TryParse(zipCodeString.FirstOrDefault(), out var zipCode))
             {
-                serviceFilterParameters.Lat = lat;
+                serviceFilterParameters.ZipCode = zipCode;
             }
 
-            // Map Lon parameter
-            if (queryParameters.TryGetValue("lon", out var lonString) && decimal.TryParse(lonString.FirstOrDefault(), out decimal lon))
-            {
-                serviceFilterParameters.Lon = lon;
-            }
+            // // Map Lat parameter
+            // if (queryParameters.TryGetValue("lat", out var latString) && double.TryParse(latString.FirstOrDefault(), out double lat))
+            // {
+            //     serviceFilterParameters.Lat = lat;
+            // }
+            //
+            // // Map Lon parameter
+            // if (queryParameters.TryGetValue("lon", out var lonString) && double.TryParse(lonString.FirstOrDefault(), out double lon))
+            // {
+            //     serviceFilterParameters.Lon = lon;
+            // }
 
             // Map CategoryIds parameter
             if (queryParameters.TryGetValue("categoryId", out var categoryIdsString))

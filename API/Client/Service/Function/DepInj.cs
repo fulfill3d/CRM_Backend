@@ -8,6 +8,8 @@ using CRM.API.Client.Service.Services;
 using CRM.API.Client.Service.Services.Interfaces;
 using CRM.API.Client.Service.Services.Options;
 using CRM.Common.Services.Interfaces;
+using CRM.Integrations.GoogleMapsClient;
+using CRM.Integrations.GoogleMapsClient.Options;
 using Microsoft.Extensions.Primitives;
 
 namespace CRM.API.Client.Service
@@ -16,7 +18,8 @@ namespace CRM.API.Client.Service
     {
         public static void RegisterServices(
             this IServiceCollection services,
-            DatabaseOption dbOption)
+            DatabaseOption dbOption,
+            Action<GoogleMapsOptions> configureGoogleOptions)
         {
             #region Miscellaneous
 
@@ -38,6 +41,7 @@ namespace CRM.API.Client.Service
             #region Services
 
             services.AddTransient<IServiceService, ServiceService>();
+            services.RegisterGoogleMapsClient(configureGoogleOptions);
 
             #endregion
         }
