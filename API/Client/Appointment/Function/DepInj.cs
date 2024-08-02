@@ -20,10 +20,10 @@ namespace Appointment
             #region Miscellaneous
 
             services.AddDatabaseContext<AppointmentContext>(dbOption);
-            services.ConfigureServiceOptions<TokenValidationOptions>((_, opt) => tokenValidation(opt));
-            services.ConfigureServiceOptions<AuthorizationScope>((_, opt) => authorizationScope(opt));
             services.AddHttpRequestBodyMapper();
             services.AddFluentValidator<NewAppointmentRequest>();
+            services.ConfigureServiceOptions<TokenValidationOptions>((_, opt) => tokenValidation(opt));
+            services.ConfigureServiceOptions<AuthorizationScope>((_, opt) => authorizationScope(opt));
             services.AddB2CJwtTokenValidator((_, opt) => tokenValidation(opt));
 
             #endregion

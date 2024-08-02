@@ -27,7 +27,9 @@ namespace CRM.API.Business.Management
         // STORE
         
         [Function(nameof(GetStores))]
-        [OpenApiOperation(operationId: "GetStores", Description = "Get all stores of the business")]
+        [OpenApiOperation(operationId: "GetStores",
+            tags: new[] { "GetStores" },
+            Description = "Get all stores of the business")]
         [OpenApiResponseWithBody(
             statusCode: HttpStatusCode.OK,
             contentType: "application/json",
@@ -58,7 +60,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(GetStore))]
-        [OpenApiOperation(operationId: "GetStore", Description = "Get a store of the business")]
+        [OpenApiOperation(operationId: "GetStore",
+            tags: new[] { "GetStore" },
+            Description = "Get a store of the business")]
         [OpenApiParameter(name: "storeId",
             In = ParameterLocation.Path,
             Required = true,
@@ -101,7 +105,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(AddStore))]
-        [OpenApiOperation(operationId: "AddStore", Description = "Add a store to the business")]
+        [OpenApiOperation(operationId: "AddStore", 
+            tags: new[] { "AddStore" },
+            Description = "Add a store to the business")]
         [OpenApiRequestBody(
             contentType: "application/json", 
             bodyType: typeof(StoreRequest), 
@@ -137,7 +143,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(EditStore))]
-        [OpenApiOperation(operationId: "EditStore", Description = "Edit a store of the business")]
+        [OpenApiOperation(operationId: "EditStore", 
+            tags: new[] { "EditStore" },
+            Description = "Edit a store of the business")]
         [OpenApiRequestBody(
             contentType: "application/json", 
             bodyType: typeof(StoreRequest), 
@@ -173,7 +181,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(DeleteStore))]
-        [OpenApiOperation(operationId: "DeleteStore", Description = "Delete a store of the business")]
+        [OpenApiOperation(operationId: "DeleteStore",
+            tags: new[] { "DeleteStore" },
+            Description = "Delete a store of the business")]
         [OpenApiParameter(name: "storeId",
             In = ParameterLocation.Path,
             Required = true,
@@ -210,7 +220,9 @@ namespace CRM.API.Business.Management
         // EMPLOYEE
         
         [Function(nameof(GetEmployees))]
-        [OpenApiOperation(operationId: "GetEmployees", Description = "Get employees of a store")]
+        [OpenApiOperation(operationId: "GetEmployees",
+            tags: new[] { "GetEmployees" },
+            Description = "Get employees of a store")]
         [OpenApiResponseWithBody(
             statusCode: HttpStatusCode.OK,
             contentType: "application/json",
@@ -241,7 +253,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(AddEmployee))]
-        [OpenApiOperation(operationId: "AddEmployee", Description = "Add employee to a store")]
+        [OpenApiOperation(operationId: "AddEmployee", 
+            tags: new[] { "AddEmployee" },
+            Description = "Add employee to a store")]
         [OpenApiParameter(name: "storeId",
             In = ParameterLocation.Path,
             Required = true,
@@ -283,7 +297,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(EditEmployees))]
-        [OpenApiOperation(operationId: "EditEmployees", Description = "Edit employee of a store")]
+        [OpenApiOperation(operationId: "EditEmployees", 
+            tags: new[] { "EditEmployees" },
+            Description = "Edit employee of a store")]
         [OpenApiRequestBody(
             contentType: "application/json", 
             bodyType: typeof(EmployeeRequest), 
@@ -319,7 +335,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(DeleteEmployee))]
-        [OpenApiOperation(operationId: "DeleteEmployee", Description = "Delete employee of a store")]
+        [OpenApiOperation(operationId: "DeleteEmployee", 
+            tags: new[] { "DeleteEmployee" },
+            Description = "Delete employee of a store")]
         [OpenApiParameter(name: "employeeId",
             In = ParameterLocation.Path,
             Required = true,
@@ -356,7 +374,9 @@ namespace CRM.API.Business.Management
         // SERVICES
         
         [Function(nameof(GetServiceCategories))]
-        [OpenApiOperation(operationId: "GetServiceCategories", Description = "Get all system defined service categories/sub categories")]
+        [OpenApiOperation(operationId: "GetServiceCategories", 
+            tags: new[] { "GetServiceCategories" },
+            Description = "Get all system defined service categories/sub categories")]
         [OpenApiResponseWithBody(
             statusCode: HttpStatusCode.OK,
             contentType: "application/json",
@@ -387,7 +407,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(GetServices))]
-        [OpenApiOperation(operationId: "GetServices", Description = "Get services provided by a store")]
+        [OpenApiOperation(operationId: "GetServices", 
+            tags: new[] { "GetServices" },
+            Description = "Get services provided by a store")]
         [OpenApiParameter(name: "storeId",
             In = ParameterLocation.Path,
             Required = true,
@@ -424,7 +446,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(AddServices))]
-        [OpenApiOperation(operationId: "AddServices", Description = "Add service to a store")]
+        [OpenApiOperation(operationId: "AddServices", 
+            tags: new[] { "AddServices" },
+            Description = "Add service to a store")]
         [OpenApiParameter(name: "storeId",
             In = ParameterLocation.Path,
             Required = true,
@@ -466,7 +490,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(EditService))]
-        [OpenApiOperation(operationId: "EditService", Description = "Edit service of a store")]
+        [OpenApiOperation(operationId: "EditService", 
+            tags: new[] { "EditService" },
+            Description = "Edit service of a store")]
         [OpenApiRequestBody(
             contentType: "application/json", 
             bodyType: typeof(StoreServiceRequest), 
@@ -502,7 +528,9 @@ namespace CRM.API.Business.Management
         }
         
         [Function(nameof(DeleteService))]
-        [OpenApiOperation(operationId: "DeleteService", Description = "Delete service of a store")]
+        [OpenApiOperation(operationId: "DeleteService", 
+            tags: new[] { "DeleteService" },
+            Description = "Delete service of a store")]
         [OpenApiParameter(name: "serviceId",
             In = ParameterLocation.Path,
             Required = true,

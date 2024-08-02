@@ -18,8 +18,9 @@ namespace CRM.API.Client.Service
         [Function(nameof(Services))]
         [OpenApiOperation(
             operationId: "Services",
-            tags: new[] { "get" },
-            Description="The Services within given range and filter query parameters")]
+            tags: new[] { "GetServices" },
+            Description="The Services within given range and filter query parameters. " +
+                        "Provide a correct zip code to get nearby services")]
         public async Task<HttpResponseData> Services(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "services/get-all")]
             HttpRequestData req,
@@ -36,8 +37,9 @@ namespace CRM.API.Client.Service
         
         [Function(nameof(Service))]
         [OpenApiOperation(
-            operationId: "HttpGet",
-            tags: new[] { "get" })]
+            operationId: "GetService",
+            tags: new[] { "GetService" }, 
+            Description="Get a service in detail")]
         [OpenApiParameter(
             name: "integerId",
             In = ParameterLocation.Path,

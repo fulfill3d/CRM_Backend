@@ -26,7 +26,7 @@ namespace Appointment
         [Function(nameof(GetAppointments))]
         [OpenApiOperation(
             operationId: "GetAppointments",
-            tags: new[] { "get" }, 
+            tags: new[] { "GetAppointments" }, 
             Description = "Returns client appointments")]
         [OpenApiResponseWithBody(
             statusCode: HttpStatusCode.OK,
@@ -59,7 +59,7 @@ namespace Appointment
         [Function(nameof(SetAppointment))]
         [OpenApiOperation(
             operationId: "SetAppointment",
-            tags: new[] { "post" }, 
+            tags: new[] { "SetAppointment" }, 
             Description = "Set the appointment")]
         [OpenApiRequestBody(
             contentType: "application/json",
@@ -96,7 +96,7 @@ namespace Appointment
         [Function(nameof(UpdateAppointment))]
         [OpenApiOperation(
             operationId: "UpdateAppointment",
-            tags: new[] { "patch" }, 
+            tags: new[] { "UpdateAppointment" }, 
             Description = "Update the appointment")]
         [OpenApiRequestBody(
             contentType: "application/json",
@@ -133,7 +133,7 @@ namespace Appointment
         [Function(nameof(CancelAppointment))]
         [OpenApiOperation(
             operationId: "CancelAppointment",
-            tags: new[] { "delete" }, 
+            tags: new[] { "CancelAppointment" }, 
             Description = "Cancel the appointment")]
         [OpenApiParameter(name: "appointmentId",
             In = ParameterLocation.Path,

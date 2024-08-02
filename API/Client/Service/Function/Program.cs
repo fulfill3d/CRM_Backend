@@ -28,6 +28,17 @@ var host = new HostBuilder()
         }, configureGoogle =>
         {
             configureGoogle.ApiKey = configuration["ApiKey_GoogleMaps"] ?? string.Empty;
+        },
+        (tokenValidation) =>
+        {
+            tokenValidation.MetadataUrl = configuration["CRM_Client_B2C_MetadataUrl"] ?? string.Empty;
+            tokenValidation.Issuer = configuration["CRM_Client_B2C_Issuer"] ?? string.Empty;
+            tokenValidation.ClientId = configuration["CRM_Client_ClientBackend_ClientId"] ?? string.Empty;
+        },
+        (tokenOptions) =>
+        {
+            tokenOptions.Read = configuration["CRM_AuthScope_Client_Service_Read"] ?? string.Empty;
+            tokenOptions.Write = configuration["CRM_AuthScope_Client_Service_Write"] ?? string.Empty;
         });
     })
     .Build();

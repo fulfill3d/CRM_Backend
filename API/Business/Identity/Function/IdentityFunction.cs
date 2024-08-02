@@ -17,7 +17,7 @@ namespace CRM.API.Business.Identity
         [Function(nameof(PostRegister))]
         [OpenApiOperation(
             operationId: "PostRegister",
-            tags: new[] { "get", "post" }, 
+            tags: new[] { "PostRegister" }, 
             Description = "This is a callback function of Azure Active Directory B2C. " +
                           "B2C callbacks here after successful sign up/sign in with `authorization_code`. " +
                           "PostRegister verifies that `authorization_code`, get an `id_token` and " +
@@ -60,7 +60,7 @@ namespace CRM.API.Business.Identity
         [Function(nameof(PostUpdate))]
         [OpenApiOperation(
             operationId: "PostUpdate",
-            tags: new[] { "get", "post" }, 
+            tags: new[] { "PostUpdate" }, 
             Description = "This is a callback function of Azure Active Directory B2C. " +
                           "B2C callbacks here after successful profile edit in with `authorization_code`. " +
                           "PostUpdate verifies that `authorization_code`, get an `id_token` and " +

@@ -7,6 +7,7 @@ using CRM.API.Client.Service.Data.Models.Request;
 using CRM.API.Client.Service.Services;
 using CRM.API.Client.Service.Services.Interfaces;
 using CRM.Common.Services.Interfaces;
+using CRM.Common.Services.Options;
 using CRM.Integrations.GoogleMapsClient;
 using CRM.Integrations.GoogleMapsClient.Options;
 using Microsoft.Extensions.Primitives;
@@ -18,7 +19,9 @@ namespace CRM.API.Client.Service
         public static void RegisterServices(
             this IServiceCollection services,
             DatabaseOption dbOption,
-            Action<GoogleMapsOptions> configureGoogleOptions)
+            Action<GoogleMapsOptions> configureGoogleOptions,
+            Action<TokenValidationOptions> tokenValidation,
+            Action<AuthorizationScope> authorizationScope)
         {
             #region Miscellaneous
 
@@ -34,6 +37,9 @@ namespace CRM.API.Client.Service
             
             services.AddFluentValidator<ServiceFilterParameters>();
             services.AddFluentValidator<PaginationParametersMapper>();
+            services.ConfigureServiceOptions<TokenValidationOptions>((_, opt) => tokenValidation(opt));
+            services.ConfigureServiceOptions<AuthorizationScope>((_, opt) => authorizationScope(opt));
+            services.AddB2CJwtTokenValidator((_, opt) => tokenValidation(opt));
 
             #endregion
 
