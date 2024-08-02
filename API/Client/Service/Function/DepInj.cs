@@ -1,5 +1,5 @@
 using CRM.Common.Database;
-using CRM.Common.DI;
+using CRM.Common.Services;
 using Microsoft.Extensions.DependencyInjection;
 using CRM.API.Client.Service.Data.Database;
 using CRM.API.Client.Service.Data.Mappers;

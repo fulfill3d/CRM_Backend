@@ -4,7 +4,7 @@ using CRM.API.Client.Identity.Services;
 using CRM.API.Client.Identity.Services.Interfaces;
 using CRM.API.Client.Identity.Services.Options;
 using CRM.Common.Database;
-using CRM.Common.DI;
+using CRM.Common.Services;
 
 namespace CRM.API.Client.Identity
 {

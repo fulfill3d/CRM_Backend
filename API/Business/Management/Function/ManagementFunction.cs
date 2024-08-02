@@ -39,7 +39,7 @@ namespace CRM.API.Business.Management
             ILogger log)
         {
             var response = req.CreateResponse();
-            var acceptedScopes = new[] { _managementScope.Write };
+            var acceptedScopes = new[] { _managementScope.Read };
             var businessRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
             
             if (businessRefId == null)
@@ -76,7 +76,7 @@ namespace CRM.API.Business.Management
             int storeId)
         {
             var response = req.CreateResponse();
-            var acceptedScopes = new[] { _managementScope.Write };
+            var acceptedScopes = new[] { _managementScope.Read };
             var businessRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
             
             if (businessRefId == null)
@@ -222,7 +222,7 @@ namespace CRM.API.Business.Management
             ILogger log)
         {
             var response = req.CreateResponse();
-            var acceptedScopes = new[] { _managementScope.Write };
+            var acceptedScopes = new[] { _managementScope.Read };
             var businessRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
             
             if (businessRefId == null)
@@ -368,7 +368,7 @@ namespace CRM.API.Business.Management
             ILogger log)
         {
             var response = req.CreateResponse();
-            var acceptedScopes = new[] { _managementScope.Write };
+            var acceptedScopes = new[] { _managementScope.Read };
             var businessRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
             
             if (businessRefId == null)
@@ -405,7 +405,7 @@ namespace CRM.API.Business.Management
             int storeId)
         {
             var response = req.CreateResponse();
-            var acceptedScopes = new[] { _managementScope.Write };
+            var acceptedScopes = new[] { _managementScope.Read };
             var businessRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
             
             if (businessRefId == null)

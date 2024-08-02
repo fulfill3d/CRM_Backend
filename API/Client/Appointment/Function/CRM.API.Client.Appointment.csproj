@@ -33,7 +33,7 @@
         <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\Common\DI\CRM.Common.DI.csproj" />
+        <ProjectReference Include="..\..\..\..\Common\Services\CRM.Common.Services.csproj" />
         <ProjectReference Include="..\Data\CRM.API.Client.Appointment.Data.csproj" />
         <ProjectReference Include="..\Services\CRM.API.Client.Appointment.Services.csproj" />
     </ItemGroup>

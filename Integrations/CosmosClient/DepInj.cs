@@ -1,4 +1,4 @@
-using CRM.Common.DI;
+using CRM.Common.Services;
 using CRM.Integrations.CosmosClient.Interfaces;
 using CRM.Integrations.CosmosClient.Options;
 using Microsoft.Extensions.DependencyInjection;

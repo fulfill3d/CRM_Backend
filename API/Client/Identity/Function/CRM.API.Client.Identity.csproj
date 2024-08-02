@@ -30,7 +30,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\..\Common\Database\CRM.Common.Database.csproj" />
-        <ProjectReference Include="..\..\..\..\Common\DI\CRM.Common.DI.csproj" />
+        <ProjectReference Include="..\..\..\..\Common\Services\CRM.Common.Services.csproj" />
         <ProjectReference Include="..\Data\CRM.API.Client.Identity.Data.csproj" />
         <ProjectReference Include="..\Services\CRM.API.Client.Identity.Services.csproj" />
     </ItemGroup>

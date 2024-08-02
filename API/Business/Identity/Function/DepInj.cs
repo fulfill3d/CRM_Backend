@@ -1,5 +1,5 @@
 using CRM.Common.Database;
-using CRM.Common.DI;
+using CRM.Common.Services;
 using CRM.API.Business.Identity.Data.Database;
 using CRM.API.Business.Identity.Services;
 using Microsoft.Extensions.DependencyInjection;

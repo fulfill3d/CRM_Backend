@@ -25,6 +25,17 @@ var host = new HostBuilder()
         services.RegisterServices(new DatabaseOption
         {
             ConnectionString = configuration["CRM_ConnectionString_Db"] ?? string.Empty,
+        },
+        (tokenValidation) =>
+        {
+            tokenValidation.MetadataUrl = configuration["CRM_Client_B2C_MetadataUrl"] ?? string.Empty;
+            tokenValidation.Issuer = configuration["CRM_Client_B2C_Issuer"] ?? string.Empty;
+            tokenValidation.ClientId = configuration["CRM_Client_ClientBackend_ClientId"] ?? string.Empty;
+        },
+        (tokenOptions) =>
+        {
+            tokenOptions.Read = configuration["CRM_AuthScope_Client_Appointment_Read"] ?? string.Empty;
+            tokenOptions.Write = configuration["CRM_AuthScope_Client_Appointment_Write"] ?? string.Empty;
         });
     })
     .Build();

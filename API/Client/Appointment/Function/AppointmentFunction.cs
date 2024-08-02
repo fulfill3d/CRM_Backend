@@ -6,6 +6,8 @@ using CRM.API.Client.Appointment.Data.Models.Request;
 using CRM.API.Client.Appointment.Data.Models.Response;
 using CRM.API.Client.Appointment.Services.Interfaces;
 using CRM.Common.Services.Interfaces;
+using CRM.Common.Services.Options;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
@@ -14,8 +16,13 @@ namespace Appointment
     public class AppointmentFunction(
         IHttpRequestBodyMapper<NewAppointmentRequest> newAppointmentRequestBodyMapper,
         IHttpRequestBodyMapper<UpdateAppointmentRequest> updateAppointmentRequestBodyMapper,
-        IAppointmentService appointmentService)
+        IAppointmentService appointmentService,
+        IJwtValidatorService jwtValidatorService,
+        IOptions<AuthorizationScope> opt,
+        ICommonClientService commonClientService)
     {
+        private readonly AuthorizationScope _appointmentScope = opt.Value;
+        
         [Function(nameof(GetAppointments))]
         [OpenApiOperation(
             operationId: "GetAppointments",
@@ -32,7 +39,18 @@ namespace Appointment
             FunctionContext executionContext)
         {
             var response = req.CreateResponse();
-            var appointments = await appointmentService.GetAppointments(5);
+            var acceptedScopes = new[] { _appointmentScope.Read };
+            var clientRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
+            
+            if (clientRefId == null)
+            {
+                response.StatusCode = HttpStatusCode.Unauthorized;
+                return response;
+            }
+            
+            var clientId = await commonClientService.GetClientIdByRefId(clientRefId);
+            
+            var appointments = await appointmentService.GetAppointments(clientId);
             response.StatusCode = HttpStatusCode.OK;
             await response.WriteStringAsync(JsonConvert.SerializeObject(appointments, Formatting.Indented));
             return response;
@@ -53,8 +71,19 @@ namespace Appointment
             FunctionContext executionContext)
         {
             var response = req.CreateResponse();
+            var acceptedScopes = new[] { _appointmentScope.Read };
+            var clientRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
+            
+            if (clientRefId == null)
+            {
+                response.StatusCode = HttpStatusCode.Unauthorized;
+                return response;
+            }
+            
+            var clientId = await commonClientService.GetClientIdByRefId(clientRefId);
+            
             var request = await newAppointmentRequestBodyMapper.MapAndValidate(req.Body);
-            var success = await appointmentService.SetNewAppointment(request, 5);
+            var success = await appointmentService.SetNewAppointment(request, clientId);
             if (!success)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
@@ -79,8 +108,19 @@ namespace Appointment
             FunctionContext executionContext)
         {
             var response = req.CreateResponse();
+            var acceptedScopes = new[] { _appointmentScope.Read };
+            var clientRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
+            
+            if (clientRefId == null)
+            {
+                response.StatusCode = HttpStatusCode.Unauthorized;
+                return response;
+            }
+            
+            var clientId = await commonClientService.GetClientIdByRefId(clientRefId);
+            
             var request = await updateAppointmentRequestBodyMapper.MapAndValidate(req.Body);
-            var success = await appointmentService.UpdateAppointment(request, 5);
+            var success = await appointmentService.UpdateAppointment(request, clientId);
             if (!success)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
@@ -107,7 +147,18 @@ namespace Appointment
             int appointmentId)
         {
             var response = req.CreateResponse();
-            var success = await appointmentService.CancelAppointment(appointmentId, 5);
+            var acceptedScopes = new[] { _appointmentScope.Read };
+            var clientRefId = await jwtValidatorService.AuthenticateAndAuthorize(req, acceptedScopes);
+            
+            if (clientRefId == null)
+            {
+                response.StatusCode = HttpStatusCode.Unauthorized;
+                return response;
+            }
+            
+            var clientId = await commonClientService.GetClientIdByRefId(clientRefId);
+
+            var success = await appointmentService.CancelAppointment(appointmentId, clientId);
             if (!success)
             {
                 response.StatusCode = HttpStatusCode.NotFound;

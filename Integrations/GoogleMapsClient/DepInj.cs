@@ -1,4 +1,4 @@
-using CRM.Common.DI;
+using CRM.Common.Services;
 using CRM.Integrations.GoogleMapsClient.Interfaces;
 using CRM.Integrations.GoogleMapsClient.Options;
 using Microsoft.Extensions.DependencyInjection;

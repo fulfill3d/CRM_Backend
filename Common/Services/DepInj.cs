@@ -1,12 +1,12 @@
 using CRM.Common.Database;
-using CRM.Common.Services;
+using CRM.Common.Database.Data;
 using CRM.Common.Services.Interfaces;
 using CRM.Common.Services.Options;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CRM.Common.DI
+namespace CRM.Common.Services
 {
     public static class DepInj
     {
@@ -58,6 +58,13 @@ namespace CRM.Common.DI
         public static void AddFluentValidator<T>(this IServiceCollection services)
         {
             services.AddValidatorsFromAssembly(typeof(T).Assembly);
+        }
+
+        public static void AddCommonClientService(
+            this IServiceCollection services, DatabaseOption dbConnectionsOptions)
+        {
+            services.AddDatabaseContext<DatabaseContext>(dbConnectionsOptions);
+            services.AddTransient<ICommonClientService, CommonClientService>();
         }
     }
 }
