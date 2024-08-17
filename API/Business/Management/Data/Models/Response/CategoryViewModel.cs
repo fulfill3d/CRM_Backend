@@ -4,10 +4,8 @@ namespace CRM.API.Business.Management.Data.Models.Response
 {
     public class CategoryViewModel
     {
-        [JsonProperty("categories")]
-        public IEnumerable<CategoriesViewModel> Categories { get; set; }
-        [JsonProperty("sub-categories")]
-        public IEnumerable<SubCategoriesViewModel> SubCategories { get; set; }
+        [JsonProperty("categories")] public IEnumerable<CategoriesViewModel> Categories { get; set; }
+        [JsonProperty("sub_categories")] public IEnumerable<SubCategoriesViewModel> SubCategories { get; set; }
     }
 
     public class CategoriesViewModel
