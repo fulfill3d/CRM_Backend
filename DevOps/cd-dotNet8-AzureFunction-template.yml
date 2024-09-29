@@ -1,0 +1,18 @@
+steps:
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'specific'
+    project: $(project)
+    pipeline: $(ciPipeline)
+    specificBuildWithTriggering: true
+    buildVersionToDownload: 'latest'
+    artifactName: 'drop'
+    targetPath: '$(Pipeline.Workspace)'
+
+- task: AzureFunctionApp@1
+  displayName: 'Deploy'
+  inputs:
+    azureSubscription: 'fulfill3d-subscription-alpha (0d4994e7-3252-46bb-939e-754c019e8c83)'
+    appType: functionApp
+    appName: $(functionAppName)
+    package: '$(Pipeline.Workspace)/**/$(packageName).zip'
