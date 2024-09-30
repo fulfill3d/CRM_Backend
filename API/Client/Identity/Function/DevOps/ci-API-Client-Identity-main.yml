@@ -1,0 +1,17 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/API/Client/Identity/*'
+      - '../../../../Common/Services/*'
+      - '../../../../Common/Database/*'
+
+variables:
+  vmImageName: 'windows-latest'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/API/Client/Identity/Function'
+  packageName: 'ClientIdentity'
+
+steps:
+  - template: ../../../../../DevOps/ci-dotNet8-AzureFunction-template.yml

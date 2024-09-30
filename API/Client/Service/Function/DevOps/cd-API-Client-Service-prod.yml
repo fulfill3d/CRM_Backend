@@ -1,0 +1,20 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  ciPipeline: 'ci-API-API-main'
+  functionAppName: 'fulfill3d-api-alpha'
+  packageName: 'API'
+  project: 'Fulfill3D'
+
+resources:
+  pipelines:
+    - pipeline: ciAPIAPIMain
+      source: 'ci-API-API-main'
+      trigger: true
+
+steps:
+  - template: ../../../DevOps/cd-dotNet8-AzureFunction-template.yml
