@@ -5,16 +5,16 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  ciPipeline: 'ci-API-API-main'
-  functionAppName: 'fulfill3d-api-alpha'
-  packageName: 'API'
-  project: 'Fulfill3D'
+  ciPipeline: 'ci-API-Client-Service-main'
+  functionAppName: 'crm-api-client-service-alpha'
+  packageName: 'ClientService'
+  project: 'CRM'
 
 resources:
   pipelines:
-    - pipeline: ciAPIAPIMain
-      source: 'ci-API-API-main'
+    - pipeline: ciAPIClientServiceMain
+      source: 'ci-API-Client-Service-main'
       trigger: true
 
 steps:
-  - template: ../../../DevOps/cd-dotNet8-AzureFunction-template.yml
+  - template: ../../../../../DevOps/cd-dotNet8-AzureFunction-template.yml
