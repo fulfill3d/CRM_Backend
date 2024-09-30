@@ -13,7 +13,7 @@ variables:
 resources:
   pipelines:
     - pipeline: ciAPIClientAppointmentMain
-      source: 'ci-API-ClientAppointment-main'
+      source: 'ci-API-Client-Appointment-main'
       trigger: true
 
 steps:
