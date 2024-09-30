@@ -1,0 +1,20 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  ciPipeline: 'ci-API-Client-Identity-main'
+  functionAppName: 'crm-api-client-identity-alpha'
+  packageName: 'ClientIdentity'
+  project: 'CRM'
+
+resources:
+  pipelines:
+    - pipeline: ciAPIClientIdentityMain
+      source: 'ci-API-Client-Identity-main'
+      trigger: true
+
+steps:
+  - template: ../../../../../DevOps/cd-dotNet8-AzureFunction-template.yml

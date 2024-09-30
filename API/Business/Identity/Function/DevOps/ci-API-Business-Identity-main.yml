@@ -1,0 +1,17 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/API/Business/Identity/*'
+      - '../../../../Common/Services/*'
+      - '../../../../Common/Database/*'
+
+variables:
+  vmImageName: 'windows-latest'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/API/Business/Identity/Function'
+  packageName: 'BusinessIdentity'
+
+steps:
+  - template: ../../../../../DevOps/ci-dotNet8-AzureFunction-template.yml

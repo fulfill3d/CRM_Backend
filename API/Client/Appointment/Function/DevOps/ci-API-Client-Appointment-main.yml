@@ -1,0 +1,18 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/API/Client/Appointment/*'
+      - '../../../../Common/Services/*'
+      - '../../../../Common/Database/*'
+      - '../../../../Common/Core/*'
+
+variables:
+  vmImageName: 'windows-latest'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/API/Client/Appointment/Function'
+  packageName: 'ClientAppointment'
+
+steps:
+  - template: ../../../../../DevOps/ci-dotNet8-AzureFunction-template.yml

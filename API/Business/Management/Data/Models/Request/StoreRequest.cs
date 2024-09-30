@@ -5,14 +5,10 @@ namespace CRM.API.Business.Management.Data.Models.Request
 {
     public class StoreRequest
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        [JsonProperty("description")]
-        public string Description { get; set; }
-        [JsonProperty("address")]
-        public AddressRequest Address { get; set; }
+        [JsonProperty("id")] public int Id { get; set; }
+        [JsonProperty("name")] public string Name { get; set; }
+        [JsonProperty("description")] public string Description { get; set; }
+        [JsonProperty("address")] public AddressRequest Address { get; set; }
     }
 
     public class StoreRequestValidator : AbstractValidator<StoreRequest>

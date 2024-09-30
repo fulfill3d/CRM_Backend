@@ -5,8 +5,8 @@ namespace CRM.API.Client.Appointment.Data.Models.Request
 {
     public class NewAppointmentRequest
     {
-        [JsonProperty("store-service-id")] public int StoreServiceId { get; set; }
-        [JsonProperty("start-date")] public DateTime StartDate { get; set; }
+        [JsonProperty("store_service_id")] public int StoreServiceId { get; set; }
+        [JsonProperty("start_date")] public DateTime StartDate { get; set; }
         [JsonProperty("note")] public string? Note { get; set; }
     }
 
