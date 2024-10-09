@@ -52,6 +52,7 @@ namespace Appointment
             
             var appointments = await appointmentService.GetAppointments(clientId);
             response.StatusCode = HttpStatusCode.OK;
+            response.Headers.Add("Content-Type", "application/json");
             await response.WriteStringAsync(JsonConvert.SerializeObject(appointments, Formatting.Indented));
             return response;
         }
