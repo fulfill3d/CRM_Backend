@@ -68,17 +68,19 @@ namespace CRM.API.Business.Management.Services
                         Country = sl.Address.Country,
                         ZipCode = sl.Address.ZipCode,
                     }).FirstOrDefault() ?? new StoreLocationViewModel(),
-                    Employees = s.StoreEmployees.Select(se => new StoreEmployeeViewModel
-                    {
-                        Id = se.Id,
-                        NickName = se.NickName,
-                        FirstName = se.FirstName,
-                        LastName = se.LastName,
-                        Email = se.Email,
-                        Phone = se.Phone,
-                        CreatedAt = se.CreatedAt,
-                        UpdatedAt = se.UpdatedAt,
-                    }).ToList()
+                    Employees = s.StoreEmployees
+                        .Where(se => se.IsEnabled)
+                        .Select(se => new StoreEmployeeViewModel 
+                        {
+                            Id = se.Id,
+                            NickName = se.NickName,
+                            FirstName = se.FirstName,
+                            LastName = se.LastName,
+                            Email = se.Email,
+                            Phone = se.Phone,
+                            CreatedAt = se.CreatedAt,
+                            UpdatedAt = se.UpdatedAt, 
+                        }).ToList()
                 }).FirstOrDefaultAsync();
 
             return store;
@@ -207,12 +209,13 @@ namespace CRM.API.Business.Management.Services
         
         // EMPLOYEE
 
-        public async Task<List<StoreEmployeeViewModel>> GetEmployees(string businessRefId)
+        public async Task<List<StoreEmployeeViewModel>> GetEmployees(string businessRefId, int storeId)
         {
             var employees = await dbContext.StoreEmployees
                 .Include(se => se.Store)
                 .Where(se => 
                     se.IsEnabled == true && 
+                    se.Store.Id == storeId &&
                     se.Store.BusinessRefId == Guid.Parse(businessRefId))
                 .Select(se => new StoreEmployeeViewModel
                 {

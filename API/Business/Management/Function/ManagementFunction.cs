@@ -228,10 +228,16 @@ namespace CRM.API.Business.Management
             contentType: "application/json",
             bodyType: typeof(List<StoreEmployeeViewModel>),
             Description = "List<StoreEmployeeViewModel> response")]
+        [OpenApiParameter(name: "storeId",
+            In = ParameterLocation.Path,
+            Required = true,
+            Type = typeof(int),
+            Description = "Store ID")]
         public async Task<HttpResponseData> GetEmployees(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "employee/get-all")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "employee/{storeId}/get-all")]
             HttpRequestData req,
-            ILogger log)
+            ILogger log, 
+            int storeId)
         {
             var response = req.CreateResponse();
             var acceptedScopes = new[] { _managementScope.Read };
@@ -243,7 +249,7 @@ namespace CRM.API.Business.Management
                 return response;
             }
             
-            var employees = await managementService.GetEmployees(businessRefId);
+            var employees = await managementService.GetEmployees(businessRefId, storeId);
 
             response.StatusCode = HttpStatusCode.OK;
             response.Headers.Add("Content-Type", "application/json");

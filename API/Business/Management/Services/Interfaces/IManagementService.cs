@@ -13,7 +13,7 @@ namespace CRM.API.Business.Management.Services.Interfaces
         Task<bool> DeleteStore(string businessRefId, int storeId);
         
         // EMPLOYEE
-        Task<List<StoreEmployeeViewModel>> GetEmployees(string businessRefId);
+        Task<List<StoreEmployeeViewModel>> GetEmployees(string businessRefId, int storeId);
         Task<bool> AddEmployee(string businessRefId, int storeId, EmployeeRequest request);
         Task<bool> EditEmployee(string businessRefId, EmployeeRequest request);
         Task<bool> DeleteEmployee(string businessRefId, int employeeId);
