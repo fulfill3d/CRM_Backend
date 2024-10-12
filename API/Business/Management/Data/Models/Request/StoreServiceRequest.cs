@@ -5,8 +5,8 @@ namespace CRM.API.Business.Management.Data.Models.Request
 {
     public class StoreServiceRequest
     {
-        [JsonProperty("store_service_id")] public int Id { get; set; }
-        [JsonProperty("service_name")] public string Name { get; set; }
+        [JsonProperty("id")] public int Id { get; set; }
+        [JsonProperty("name")] public string Name { get; set; }
         [JsonProperty("description")] public string Description { get; set; }
         [JsonProperty("duration")] public int Duration { get; set; }
         [JsonProperty("price")] public decimal Price { get; set; }
