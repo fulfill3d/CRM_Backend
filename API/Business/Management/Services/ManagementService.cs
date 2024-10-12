@@ -357,24 +357,18 @@ namespace CRM.API.Business.Management.Services
                     Name = s.Name,
                     Description = s.Description,
                     Categories = s.CategorizeStoreServices
-                        .GroupBy(cs => new
+                        .Select(css => new ServiceCategoryViewModel
                         {
-                            cs.ServiceCategory.Id, 
-                            cs.ServiceCategory.Name, 
-                            cs.ServiceCategory.Description
-                        })
-                        .Select(g => new ServiceCategoryViewModel
-                        {
-                            Id = g.Key.Id,
-                            Name = g.Key.Name,
-                            Description = g.Key.Description,
-                            SubCategories = g.Select(cs => new ServiceSubCategoryViewModel
-                            {
-                                Id = cs.ServiceSubCategory.Id,
-                                Name = cs.ServiceSubCategory.Name,
-                                Description = cs.ServiceSubCategory.Description
-                            }).ToList()
-                        }).ToList()
+                            Id = css.ServiceCategory.Id,
+                            Name = css.ServiceCategory.Name,
+                            Description = css.ServiceCategory.Description
+                        }).ToList(),
+                    SubCategories = s.CategorizeStoreServices
+                        .Select(cs => new ServiceSubCategoryViewModel { 
+                            Id = cs.ServiceSubCategory.Id,
+                            Name = cs.ServiceSubCategory.Name, 
+                            Description = cs.ServiceSubCategory.Description 
+                        }).ToList() 
                 }).ToListAsync();
     
             return services;

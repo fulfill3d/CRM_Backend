@@ -15,6 +15,8 @@ namespace CRM.API.Business.Management.Data.Models.Response
         [JsonProperty("description")] public string Description { get; set; }
 
         [JsonProperty("categories")] public List<ServiceCategoryViewModel> Categories { get; set; }
+
+        [JsonProperty("sub_categories")] public List<ServiceSubCategoryViewModel> SubCategories { get; set; }
     }
 
     public class ServiceCategoryViewModel
@@ -24,8 +26,6 @@ namespace CRM.API.Business.Management.Data.Models.Response
         [JsonProperty("name")] public string Name { get; set; }
 
         [JsonProperty("description")] public string Description { get; set; }
-
-        [JsonProperty("sub_categories")] public List<ServiceSubCategoryViewModel> SubCategories { get; set; }
     }
 
     public class ServiceSubCategoryViewModel
