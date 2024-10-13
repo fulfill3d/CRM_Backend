@@ -157,6 +157,8 @@ namespace CRM.API.Client.Service.Services
                                    serviceFilters.SubCategoryIds.Contains(css.ServiceSubCategoryId)));
             }
 
+            predicate = predicate.And(ss => ss.IsEnabled);
+
             return predicate;
         }
     }
