@@ -5,12 +5,12 @@ namespace CRM.API.Business.Management.Data.Models.Request
 {
     public class AddressRequest
     {
-        [JsonProperty("id")] public int Id { get; set; }
+        [JsonProperty("id")] public int? Id { get; set; }
         [JsonProperty("location_name")] public string LocationName { get; set; }
         [JsonProperty("first_name")] public string FirstName { get; set; }
         [JsonProperty("last_name")] public string LastName { get; set; }
-        [JsonProperty("street1")] public string Street1 { get; set; }
-        [JsonProperty("street2")] public string? Street2 { get; set; }
+        [JsonProperty("street_1")] public string Street1 { get; set; }
+        [JsonProperty("street_2")] public string? Street2 { get; set; }
         [JsonProperty("city")] public string City { get; set; }
         [JsonProperty("state")] public string State { get; set; }
         [JsonProperty("country")] public string Country { get; set; }
