@@ -357,6 +357,7 @@ namespace CRM.API.Business.Management.Services
                     Name = s.Name,
                     Description = s.Description,
                     Categories = s.CategorizeStoreServices
+                        .Where(css => css.IsEnabled == true)
                         .Select(css => new ServiceCategoryViewModel
                         {
                             Id = css.ServiceCategory.Id,
@@ -364,6 +365,7 @@ namespace CRM.API.Business.Management.Services
                             Description = css.ServiceCategory.Description
                         }).ToList(),
                     SubCategories = s.CategorizeStoreServices
+                        .Where(css => css.IsEnabled == true)
                         .Select(cs => new ServiceSubCategoryViewModel { 
                             Id = cs.ServiceSubCategory.Id,
                             Name = cs.ServiceSubCategory.Name, 
@@ -437,123 +439,71 @@ namespace CRM.API.Business.Management.Services
 
         public async Task<bool> EditStoreService(string businessRefId, StoreServiceRequest request)
         {
+            // Parse the business reference ID
+            if (!Guid.TryParse(businessRefId, out var businessGuid))
+            {
+                return false; // Invalid GUID format
+            }
+
+            // Fetch the store service and include current categorization data
             var service = await dbContext.StoreServices
+                .Include(ss => ss.CategorizeStoreServices) // Include existing categorizations
                 .FirstOrDefaultAsync(ss =>
-                    ss.IsEnabled == true &&
-                    ss.BusinessRefId == Guid.Parse(businessRefId) &&
+                    ss.IsEnabled &&
+                    ss.BusinessRefId == businessGuid &&
                     ss.Id == request.Id);
 
             if (service == null) return false;
-            
+
+            // Update service fields
             service.UpdatedAt = DateTime.UtcNow;
             service.Name = request.Name;
             service.Description = request.Description;
             service.Duration = request.Duration;
             service.Price = request.Price;
-            
-            // TODO Edit Store Service Category
-            // // Ensure all categories and subcategories exist
-            // var existingCategories = await _dbContext.ServiceCategories
-            //     .Where(sc => request.Categories.Contains(sc.Id) && sc.IsEnabled == true)
-            //     .Select(sc => sc.Id)
-            //     .ToListAsync();
-            //
-            // var existingSubCategories = await _dbContext.ServiceSubCategories
-            //     .Where(ssc => request.SubCategories.Contains(ssc.Id) && ssc.IsEnabled == true)
-            //     .Select(ssc => ssc.Id)
-            //     .ToListAsync();
-            //
-            // if (existingCategories.Count != request.Categories.Count() || existingSubCategories.Count != request.SubCategories.Count())
-            // {
-            //     return new BadRequestObjectResult("One or more categories or subcategories do not exist or are not enabled.");
-            // }
-            //
-            // // REMOVE IF NOT EXISTS ANYMORE
-            // var categoryIds = request.Categories.ToList();
-            // var subCategoryIds = request.SubCategories.ToList();
-            //
-            // foreach (var categorize in service.CategorizeStoreServices)
-            // {
-            //     if (!categoryIds.Contains(categorize.ServiceCategoryId) &&
-            //         !subCategoryIds.Contains(categorize.ServiceSubCategoryId))
-            //     {
-            //         categorize.IsEnabled = false;
-            //     }
-            //     else
-            //     {
-            //         categorize.IsEnabled = true;
-            //     }
-            // }
-            //
-            // // ADD IF NEW CATEGORY/SUBCATEGORY
-            // var existingCategoryIds = service.CategorizeStoreServices
-            //     .Where(c => c.IsEnabled == true)
-            //     .Select(c => c.ServiceCategoryId)
-            //     .ToList();
-            //
-            // var existingSubCategoryIds = service.CategorizeStoreServices
-            //     .Where(c => c.IsEnabled == true)
-            //     .Select(c => c.ServiceSubCategoryId)
-            //     .ToList();
-            //
-            // var newCategories = categoryIds.Except(existingCategoryIds).ToList();
-            //
-            // var newSubCategories = subCategoryIds.Except(existingSubCategoryIds).ToList();
-            //
-            // if (newCategories.Count != 0 || newSubCategories.Count != 0)
-            // {
-            //     var newCategorizeStoreServices = new List<CategorizeStoreService>();
-            //
-            //     foreach (var categoryId in newCategories)
-            //     {
-            //         foreach (var subCategoryId in newSubCategories)
-            //         {
-            //             newCategorizeStoreServices.Add(new CategorizeStoreService
-            //             {
-            //                 ServiceCategoryId = categoryId,
-            //                 ServiceSubCategoryId = subCategoryId,
-            //                 IsEnabled = true
-            //             });
-            //         }
-            //     }
-            //
-            //     foreach (var categoryId in newCategories)
-            //     {
-            //         foreach (var subCategoryId in existingSubCategoryIds)
-            //         {
-            //             newCategorizeStoreServices.Add(new CategorizeStoreService
-            //             {
-            //                 ServiceCategoryId = categoryId,
-            //                 ServiceSubCategoryId = subCategoryId,
-            //                 IsEnabled = true
-            //             });
-            //         }
-            //     }
-            //
-            //     foreach (var categoryId in existingCategoryIds)
-            //     {
-            //         foreach (var subCategoryId in newSubCategories)
-            //         {
-            //             newCategorizeStoreServices.Add(new CategorizeStoreService
-            //             {
-            //                 ServiceCategoryId = categoryId,
-            //                 ServiceSubCategoryId = subCategoryId,
-            //                 IsEnabled = true
-            //             });
-            //         }
-            //     }
-            //
-            //     foreach (var storeService in newCategorizeStoreServices)
-            //     {
-            //         service.CategorizeStoreServices.Add(storeService);
-            //     }
-            // }
 
+            // Step 1: Ensure all provided categories and subcategories exist and are enabled
+            var existingCategories = await dbContext.ServiceCategories
+                .Where(sc => request.Categories.Contains(sc.Id) && sc.IsEnabled)
+                .Select(sc => sc.Id)
+                .ToListAsync();
+
+            var existingSubCategories = await dbContext.ServiceSubCategories
+                .Where(ssc => request.SubCategories.Contains(ssc.Id) && ssc.IsEnabled)
+                .Select(ssc => ssc.Id)
+                .ToListAsync();
+
+            // Validate existence of categories and subcategories
+            if (existingCategories.Count != request.Categories.Count() || existingSubCategories.Count != request.SubCategories.Count())
+            {
+                return false; // Bad request if any of the categories/subcategories are invalid
+            }
+
+            // Step 2: Disable all existing CategorizeStoreService records using ExecuteUpdateAsync (EF Core 7+)
+            await dbContext.CategorizeStoreServices
+                .Where(c => c.StoreServiceId == service.Id && c.IsEnabled)
+                .ExecuteUpdateAsync(setter => setter.SetProperty(c => c.IsEnabled, false));
+
+            // Step 3: Create new categorization entries for the incoming request
+            var newCategorizeStoreServices = request.Categories
+                .SelectMany(catId => request.SubCategories, (catId, subId) => new CategorizeStoreService
+                {
+                    StoreServiceId = service.Id,
+                    ServiceCategoryId = catId,
+                    ServiceSubCategoryId = subId,
+                    IsEnabled = true
+                })
+                .ToList();
+
+            // Bulk insert the new category/subcategory combinations
+            await dbContext.CategorizeStoreServices.AddRangeAsync(newCategorizeStoreServices);
+
+            // Save changes
             await dbContext.SaveChangesAsync();
 
             return true;
         }
-
+        
         public async Task<bool> DeleteStoreService(string businessRefId, int storeServiceId)
         {
             var service = await dbContext.StoreServices
