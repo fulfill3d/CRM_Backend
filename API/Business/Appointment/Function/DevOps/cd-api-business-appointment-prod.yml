@@ -1,0 +1,20 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  ciPipeline: 'ci-api-business-appointment-main'
+  functionAppName: 'crm-api-business-appointment-alpha'
+  packageName: 'Appointment'
+  project: 'CRM'
+
+resources:
+  pipelines:
+    - pipeline: ciApiBusinessAppointmentMain
+      source: 'ci-api-business-appointment-main'
+      trigger: true
+
+steps:
+  - template: ../../../../../DevOps/cd-dotNet8-AzureFunction-template.yml
