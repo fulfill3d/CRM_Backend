@@ -7,7 +7,7 @@ pool:
 variables:
   ciPipeline: 'ci-api-business-store-main'
   functionAppName: 'crm-api-business-store-alpha'
-  packageName: 'Service'
+  packageName: 'Store'
   project: 'CRM'
 
 resources:
