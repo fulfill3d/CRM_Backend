@@ -4,7 +4,7 @@ trigger:
       - main
   paths:
     include:
-      - '/API/Business/Management/*'
+      - '/API/Business/Store/*'
       - '../../../../Common/Services/*'
       - '../../../../Common/Database/*'
       - '../../../../Integrations/GoogleMapsClient/*'
