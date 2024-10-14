@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace CRM.API.Business.Identity.Data.Database
+namespace CRM.API.Business.Service.Data.Database
 {
-    public partial class IdentityContext(DbContextOptions<IdentityContext> options) : DbContext(options)
+    public partial class ServiceContext(DbContextOptions<ServiceContext> options) : DbContext(options)
     {
-        public virtual DbSet<CRM.Common.Database.Data.Business> Businesses { get; set; }
-        public virtual DbSet<CRM.Common.Database.Data.Client> Clients { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Store> Stores { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.StoreService> StoreServices { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.ServiceCategory> ServiceCategories { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.ServiceSubCategory> ServiceSubCategories { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.CategorizeStoreService> CategorizeStoreServices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

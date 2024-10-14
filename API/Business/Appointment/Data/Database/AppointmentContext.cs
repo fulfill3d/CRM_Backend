@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace CRM.API.Business.Identity.Data.Database
+namespace CRM.API.Business.Appointment.Data.Database
 {
-    public partial class IdentityContext(DbContextOptions<IdentityContext> options) : DbContext(options)
+    public partial class AppointmentContext(DbContextOptions<AppointmentContext> options) : DbContext(options)
     {
-        public virtual DbSet<CRM.Common.Database.Data.Business> Businesses { get; set; }
-        public virtual DbSet<CRM.Common.Database.Data.Client> Clients { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Store> Stores { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.StoreService> StoreServices { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Appointment> Appointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

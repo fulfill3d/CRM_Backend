@@ -41,6 +41,7 @@ namespace CRM.API.Business.Identity.Services
             else
             {
                 await CreateNewBusiness(business);
+                await CreateNewClient(business); // SEE EXPLANATION below on the METHOD on WHY THIS is CALLED
             }
 
             return true;
@@ -126,6 +127,35 @@ namespace CRM.API.Business.Identity.Services
             await dbContext.SaveChangesAsync();
             
             // TODO SendGrid / Send Updated Email
+        }
+        
+        // THIS IS IMPLEMENTED SINCE WE HAVE SINGLE B2C and SINGLE FRONTEND for BUSINESS and CLIENT
+        // ONCE THE USER LOGIN in SINGLE DEMO APP, both CLIENT and BUSINESS ENTITIES will be CREATED
+        // THEREFORE, the USER would both test BUSINESS and CLIENT in DEMO APP
+        private async Task CreateNewClient(CRM.API.Business.Identity.Data.Models.Business business)
+        {
+            var doesClientExists = await dbContext.Clients
+                .AnyAsync(b => b.IsEnabled == true && b.RefId == Guid.Parse(business.OID));
+
+            if (doesClientExists)
+            {
+                return;
+            }
+
+            await dbContext.Clients.AddAsync(new Common.Database.Data.Client
+            {
+                RefId = Guid.Parse(business.OID),
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsEnabled = true,
+                FirstName = business.Name,
+                LastName = business.Name,
+                Email = business.Email,
+                Phone = string.Empty,
+            });
+
+            await dbContext.SaveChangesAsync();
+            
         }
     }
 }
