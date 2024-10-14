@@ -1,0 +1,20 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  ciPipeline: 'ci-api-business-employee-main'
+  functionAppName: 'crm-api-business-employee-alpha'
+  packageName: 'Employee'
+  project: 'CRM'
+
+resources:
+  pipelines:
+    - pipeline: ciApiBusinessEmployeeMain
+      source: 'ci-api-business-employee-main'
+      trigger: true
+
+steps:
+  - template: ../../../../../DevOps/cd-dotNet8-AzureFunction-template.yml

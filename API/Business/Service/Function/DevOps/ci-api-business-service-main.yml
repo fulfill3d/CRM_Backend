@@ -1,0 +1,17 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/API/Business/Management/*'
+      - '../../../../Common/Services/*'
+      - '../../../../Common/Database/*'
+
+variables:
+  vmImageName: 'windows-latest'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/API/Business/Service/Function'
+  packageName: 'Service'
+
+steps:
+  - template: ../../../../../DevOps/ci-dotNet8-AzureFunction-template.yml
