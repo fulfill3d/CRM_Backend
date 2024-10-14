@@ -5,6 +5,7 @@ namespace CRM.API.Business.Identity.Data.Database
     public partial class IdentityContext(DbContextOptions<IdentityContext> options) : DbContext(options)
     {
         public virtual DbSet<CRM.Common.Database.Data.Business> Businesses { get; set; }
+        public virtual DbSet<CRM.Common.Database.Data.Client> Clients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
