@@ -30,6 +30,9 @@ The CRM Application provides a platform for businesses to efficiently manage the
 - **CRM.API.Client.Service:** Find services based on location and other filters.
 - **CRM.API.Client.Appointment:** Book appointments with businesses for various services.
 
+### Functions
+- **CRM.Functions.Background:** Time trigger background tasks.
+
 ## Tech Stack
 
 - **Backend:** .NET 8 (Isolated Worker), Azure Functions v4
