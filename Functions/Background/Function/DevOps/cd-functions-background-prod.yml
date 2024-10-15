@@ -1,0 +1,20 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  ciPipeline: 'ci-functions-background-main'
+  functionAppName: 'crm-functions-background-alpha'
+  packageName: 'Background'
+  project: 'CRM'
+
+resources:
+  pipelines:
+    - pipeline: ciFunctionsBackgroundMain
+      source: 'ci-functions-background-main'
+      trigger: true
+
+steps:
+  - template: ../../../../DevOps/cd-dotNet8-AzureFunction-template.yml

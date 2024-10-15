@@ -1,0 +1,18 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/Functions/Background/*'
+      - '../../../Common/Services/*'
+      - '../../../Common/Database/*'
+      - '../../../Common/Core/*'
+
+variables:
+  vmImageName: 'windows-latest'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/Functions/Background/Function'
+  packageName: 'Background'
+
+steps:
+  - template: ../../../../DevOps/ci-dotNet8-AzureFunction-template.yml
