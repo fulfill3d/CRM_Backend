@@ -21,6 +21,7 @@ namespace CRM.API.Business.Appointment
             services.ConfigureServiceOptions<TokenValidationOptions>((_, opt) => tokenValidation(opt));
             services.ConfigureServiceOptions<AuthorizationScope>((_, opt) => authorizationScope(opt));
             services.AddDatabaseContext<AppointmentContext>(dbOption);
+            services.AddB2CJwtTokenValidator((_, opt) => tokenValidation(opt));
 
             #endregion
 
